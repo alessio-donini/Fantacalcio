@@ -1,6 +1,6 @@
 <?php
 require("../../DB/connect.php");
-require("../../MODEL/league.php");
+require("../../MODEL/squadLeague.php");
 
 header("Content-type: application/json; charset=UTF-8");
 
@@ -13,12 +13,13 @@ if (!isset($_GET['id']) || empty($id = $_GET['id']))
 
 $db = new Database();
 $conn = $db->connect();
-$league = new League($conn);
+$squad_league = new squadLeague($conn);
 
-if ($league->deleteLeague($id))
+$result = $squad_league->getSquadLeague($id);
+if ($result->num_rows > 0)
 {
     http_response_code(200);
-    echo json_encode(["response" => true, "message" => "League deleted"]);
+    echo json_encode($result->fetch_assoc(), JSON_PRETTY_PRINT);
 }
 else
 {

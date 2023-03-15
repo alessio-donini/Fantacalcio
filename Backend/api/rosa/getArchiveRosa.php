@@ -1,24 +1,24 @@
 <?php
 require("../../DB/connect.php");
-require("../../MODEL/league.php");
+require("../../MODEL/rosa.php");
 
 header("Content-type: application/json; charset=UTF-8");
 
 $db = new Database();
 $conn = $db->connect();
-$league = new League($conn);
+$rosa = new Rosa($conn);
 
-$result = $league->getArchiveLeague();
+$result = $rosa->getArchiveRosa();
 if ($result->num_rows > 0)
 {
-    $leagues = array();
+    $rosa = array();
     while($record = $result->fetch_assoc())
     {
-        $leagues[] = $record;
+        $rosa[] = $record;
     }
 
     http_response_code(200);
-    echo json_encode($leagues, JSON_PRETTY_PRINT);
+    echo json_encode($rosa, JSON_PRETTY_PRINT);
 }
 else
 {
